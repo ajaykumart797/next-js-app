@@ -13,6 +13,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - run: docker build . -t harishneel/next-js-app
-    - run: echo "${{secrets.DOCKERHUB_PASSWORD}}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin 
-    - run: docker push harishneel/next-js-app:latest
+    
+    - name: Build Docker image
+      run: docker build . -t abhishek976772/demo-app1
+
+    - name: Log in to Docker Hub
+      run: echo "${{secrets.DOCKER_USERNAME}}" | docker login -u "${{secrets.DOCKER_PASSWORD}}" --pasword-stdin
+
+    - name: Push Docker image
+      run: docker push abhishek976772/demo-app1:latest
+ 
