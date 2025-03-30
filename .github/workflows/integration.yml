@@ -49,7 +49,18 @@ jobs:
 
     - name: "Running test cases"
       run: npm run test
+      
+    - name: Print environment variables
+      run: printenv
 
+    - name: Check GH_TOKEN
+      run: |
+         if [ -z "${{ secrets.GH_TOKEN }}" ]; then
+            echo "GH_TOKEN is not set"
+            exit 1
+           else
+            echo "GH_TOKEN is set"
+          fi
     - name: Install semantic-release
       run: npm install -g semantic-release @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/npm
 
@@ -61,11 +72,4 @@ jobs:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: npx semantic-release
     
-    - name: Check GH_TOKEN
-      run: |
-         if [ -z "${{ secrets.GH_TOKEN }}" ]; then
-            echo "GH_TOKEN is not set"
-            exit 1
-           else
-            echo "GH_TOKEN is set"
-          fi
+    
